@@ -10,7 +10,11 @@ import { cn } from '../lib/utils'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const apiUrlFromEnv = process.env.NEXT_PUBLIC_API_URL
+const isBrowser = typeof window !== 'undefined'
+const isLocalhost = isBrowser ? /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname) : false
+const defaultApiUrl = isBrowser && !isLocalhost ? 'https://pokechat-api.fly.dev' : 'http://localhost:8000'
+const API_URL = apiUrlFromEnv || defaultApiUrl
 
 interface ChatMessage {
   id: string
